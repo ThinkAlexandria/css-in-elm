@@ -1,7 +1,7 @@
 {
     "version": "11.2.0",
-    "summary": "CSS Preprocessor for Elm",
-    "repository": "https://github.com/rtfeldman/elm-css.git",
+    "summary": "Write CSS stylesheets in Elm",
+    "repository": "https://github.com/ThinkAlexandria/css-in-elm.git",
     "license": "BSD-3-Clause",
     "source-directories": [
         "src"

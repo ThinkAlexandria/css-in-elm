@@ -1,9 +1,10 @@
-[![Logo](https://raw.githubusercontent.com/rtfeldman/elm-css/c78bacb4420696b8d22d9429616a21c7ab20def3/assets/logo.png)](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest)
+[![Logo](./assets/logo.png)](http://package.elm-lang.org/packages/ThinkAlexandria/css-in-elm/latest)
 
-# elm-css [![Version](https://img.shields.io/npm/v/elm-css.svg)](https://www.npmjs.com/package/elm-css) [![Travis build Status](https://travis-ci.org/rtfeldman/elm-css.svg?branch=master)](http://travis-ci.org/rtfeldman/elm-css) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/0j7x0mpggmtu6mms/branch/master?svg=true)](https://ci.appveyor.com/project/rtfeldman/elm-css/branch/master)
+# elm-css [![Version](https://img.shields.io/npm/v/elm-css.svg)](https://www.npmjs.com/package/elm-css) [![Travis build Status](https://travis-ci.org/ThinkAlexandria/css-in-elm.svg?branch=master)](http://travis-ci.org/ThinkAlexandria/css-in-elm) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/0j7x0mpggmtu6mms/branch/master?svg=true)](https://ci.appveyor.com/project/ThinkAlexandria/css-in-elm/branch/master)
 
-`elm-css` lets you define CSS in Elm. (For an Elm styling system that is a
-complete departure from CSS, check out [style-elements](http://package.elm-lang.org/packages/mdgriffith/style-elements/latest).)
+`css-in-elm` lets you define CSS in Elm. This is a fork of
+[elm-css](https://github.com/ThinkAlexandria/css-in-elm) which is abandoning support for
+generating CSS files.
 
 Here's an example of how to define some `elm-css` styles:
 
@@ -67,8 +68,8 @@ if you write `color "blah"` or `margin (rgb 1 2 3)`, you'll get a type mismatch.
 
 `elm-css` draws inspiration from the excellent [Sass](http://sass-lang.com/), [Stylus](http://stylus-lang.com/), and [CSS Modules](http://glenmaddern.com/articles/css-modules). It includes popular features like:
 
-* [Mixins](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css#mixin)
-* [namespaces](http://package.elm-lang.org/packages/rtfeldman/elm-css/latest/Css-Namespace#namespace)
+* [Mixins](http://package.elm-lang.org/packages/ThinkAlexandria/css-in-elm/latest/Css#mixin)
+* [namespaces](http://package.elm-lang.org/packages/ThinkAlexandria/css-in-elm/latest/Css-Namespace#namespace)
 * [nested media queries](https://davidwalsh.name/write-media-queries-sass) (and nested selectors in general, like how [Sass](http://sass-lang.com/) does them)
 
 There are two popular approaches to using it; you can use either or combine both of these, depending on your needs and preferences.
@@ -94,7 +95,7 @@ You can also use `elm-css` as a CSS preprocessor which generates separate .css f
 To do this, you will need to install both the node module and the Elm library:
 
     npm install -g elm-css
-    elm package install rtfeldman/elm-css
+    elm package install ThinkAlexandria/css-in-elm
 
 Then you'll need a special module with a port for `elm-css` to access:
 
@@ -155,7 +156,7 @@ Try it out! (make sure you already have [elm](http://elm-lang.org) installed, e.
 
 ```
 $ npm install -g elm-css
-$ git clone https://github.com/rtfeldman/elm-css.git
+$ git clone https://github.com/ThinkAlexandria/css-in-elm.git
 $ cd elm-css/examples
 $ elm-css src/Stylesheets.elm
 $ less homepage.css
@@ -169,7 +170,7 @@ A gentle introduction to some of the features of `elm-css` is also available in
 There are a few examples to check out!
 
 - [json-to-elm](https://github.com/eeue56/json-to-elm) which can see be seen live [here](https://noredink.github.io/json-to-elm)
-- the [examples](https://github.com/rtfeldman/elm-css/tree/master/examples) folder, which contains a working project with a README
+- the [examples](https://github.com/ThinkAlexandria/css-in-elm/tree/master/examples) folder, which contains a working project with a README
 - the example above
 
 #### Using `elm-css` with Elm view code
@@ -178,31 +179,6 @@ Here's how to use `elm-css` in your projects:
 
 In your Elm code, use the same union types to represent classes and ids. Then they can't get out of sync with your CSS. To do this, you'll need special versions the of `id`, `class`, and `classList` functions from `elm-html`.
 
-Install the handy package that combines `elm-html` and `elm-css`:
-
-     elm package install rtfeldman/elm-css-helpers
-
-The `Elm.CssHelpers.withNamespace` returns a record full of handy functions. Use that, and then construct Html using classes and ids defined in your union types. For example:
-
-```elm
-module MyView exposing (..)
-
-
-import Html.CssHelpers
-import MyCss
-
-
-{ id, class, classList } =
-    Html.CssHelpers.withNamespace "dreamwriter"
-
-
-view =
-    Html.div []
-        [ Html.div [ class [ MyCss.NavBar ] ] [ Html.text "this has the NavBar class" ]
-        , Html.div [ id MyCss.Page ] [ Html.text "this has the Page id" ]
-        ]
-
-```
 
 #### Missing CSS properties
 
