@@ -1,12 +1,22 @@
+# This is a Fork
+This is a fork of
+[elm-css](https://github.com/rtfeldman/elm-css) which is abandoning support for
+generating CSS files and moving to locally scoped CSS rules. The author
+believes the new design is the One True Way and will be devoting his energy to
+the new design. It is our concern that the 11.x branch (the last version before
+the design change) will not be ported to future versions of Elm by rtfeldman.
+This fork is commited to maintaining the old stylesheet generating design
+forward into future versions of Elm.
+
+
+
 [![Logo](./assets/logo.png)](http://package.elm-lang.org/packages/ThinkAlexandria/css-in-elm/latest)
 
-# elm-css [![Version](https://img.shields.io/npm/v/elm-css.svg)](https://www.npmjs.com/package/elm-css) [![Travis build Status](https://travis-ci.org/ThinkAlexandria/css-in-elm.svg?branch=master)](http://travis-ci.org/ThinkAlexandria/css-in-elm) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/0j7x0mpggmtu6mms/branch/master?svg=true)](https://ci.appveyor.com/project/ThinkAlexandria/css-in-elm/branch/master)
+# css-in-elm [![Version](https://img.shields.io/npm/v/elm-css.svg)](https://www.npmjs.com/package/elm-css) [![Travis build Status](https://travis-ci.org/ThinkAlexandria/css-in-elm.svg?branch=master)](http://travis-ci.org/ThinkAlexandria/css-in-elm) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/0j7x0mpggmtu6mms/branch/master?svg=true)](https://ci.appveyor.com/project/ThinkAlexandria/css-in-elm/branch/master)
 
-`css-in-elm` lets you define CSS in Elm. This is a fork of
-[elm-css](https://github.com/ThinkAlexandria/css-in-elm) which is abandoning support for
-generating CSS files.
+`css-in-elm` lets you define CSS in Elm.
 
-Here's an example of how to define some `elm-css` styles:
+Here's an example of how to define some `css-in-elm` styles:
 
 ```elm
 module MyCss exposing (..)
@@ -63,10 +73,10 @@ Here's what you can do with this code:
 * You can *share `NavBar` and `Page`* with your Elm view code, so your classes and IDs can never get out of sync due to a typo or refactor.
 * You can *move this code into your view file* and have your styles live side-by-side with your view functions themselves.
 
-`elm-css` works hard to prevent invalid styles from being generated; for example,
+`css-in-elm` works hard to prevent invalid styles from being generated; for example,
 if you write `color "blah"` or `margin (rgb 1 2 3)`, you'll get a type mismatch. If you write `(rgb 3000 0 -3)` you'll get a build-time validation error (RGB values must be between 0 and 255) if you try to compile it to a stylesheet.
 
-`elm-css` draws inspiration from the excellent [Sass](http://sass-lang.com/), [Stylus](http://stylus-lang.com/), and [CSS Modules](http://glenmaddern.com/articles/css-modules). It includes popular features like:
+`css-in-elm` draws inspiration from the excellent [Sass](http://sass-lang.com/), [Stylus](http://stylus-lang.com/), and [CSS Modules](http://glenmaddern.com/articles/css-modules). It includes popular features like:
 
 * [Mixins](http://package.elm-lang.org/packages/ThinkAlexandria/css-in-elm/latest/Css#mixin)
 * [namespaces](http://package.elm-lang.org/packages/ThinkAlexandria/css-in-elm/latest/Css-Namespace#namespace)
@@ -76,7 +86,7 @@ There are two popular approaches to using it; you can use either or combine both
 
 #### Approach 1: Inline Styles
 
-One way to use `elm-css` is for inline styles, using the `asPairs` function:
+One way to use `css-in-elm` is for inline styles, using the `asPairs` function:
 
 ```elm
 styles =
@@ -86,11 +96,11 @@ button [ styles [ position absolute, left (px 5) ] ]
     [ text "Whee!" ]
 ```
 
-This approach is the simplest way to get started with `elm-css`. One advantage of inline styles is that these can be dynamically changed at runtime; a limitation is that CSS pseudo-classes and pseudo-elements cannot be used with inline styles.
+This approach is the simplest way to get started with `css-in-elm`. One advantage of inline styles is that these can be dynamically changed at runtime; a limitation is that CSS pseudo-classes and pseudo-elements cannot be used with inline styles.
 
 #### Approach 2: Generating CSS files
 
-You can also use `elm-css` as a CSS preprocessor which generates separate .css files.
+You can also use `css-in-elm` as a CSS preprocessor which generates separate .css files.
 
 To do this, you will need to install both the node module and the Elm library:
 
@@ -157,12 +167,12 @@ Try it out! (make sure you already have [elm](http://elm-lang.org) installed, e.
 ```
 $ npm install -g elm-css
 $ git clone https://github.com/ThinkAlexandria/css-in-elm.git
-$ cd elm-css/examples
+$ cd css-in-elm/examples
 $ elm-css src/Stylesheets.elm
 $ less homepage.css
 ```
 
-A gentle introduction to some of the features of `elm-css` is also available in
+A gentle introduction to some of the features of `css-in-elm` is also available in
 [the tutorial](Tutorial.md).
 
 ### Examples
@@ -173,22 +183,22 @@ There are a few examples to check out!
 - the [examples](https://github.com/ThinkAlexandria/css-in-elm/tree/master/examples) folder, which contains a working project with a README
 - the example above
 
-#### Using `elm-css` with Elm view code
+#### Using `css-in-elm` with Elm view code
 
-Here's how to use `elm-css` in your projects:
+Here's how to use `css-in-elm` in your projects:
 
 In your Elm code, use the same union types to represent classes and ids. Then they can't get out of sync with your CSS. To do this, you'll need special versions the of `id`, `class`, and `classList` functions from `elm-html`.
 
 
 #### Missing CSS properties
 
-`elm-css` is still in development. Not all CSS properties have been added yet.
-If you run into this problem, `elm-css` includes the `property` function. It takes
+`css-in-elm` is still in development. Not all CSS properties have been added yet.
+If you run into this problem, `css-in-elm` includes the `property` function. It takes
 two `Strings`; the property key, and its value.
 
 **e.g.**
 
-We want `z-index`, but suppose `elm-css` did not implement it. We would define it ourselves:
+We want `z-index`, but suppose `css-in-elm` did not implement it. We would define it ourselves:
 
 ```elm
 import Css exposing (..)
