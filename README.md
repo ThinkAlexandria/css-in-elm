@@ -1,12 +1,15 @@
 # This is a Fork
-This is a fork of
-[elm-css](https://github.com/rtfeldman/elm-css) which is abandoning support for
-generating CSS files and moving to locally scoped CSS rules. The author
-believes the new design is the One True Way and will be devoting his energy to
-the new design. It is our concern that the 11.x branch (the last version before
-the design change) will not be ported to future versions of Elm by rtfeldman.
-This fork is commited to maintaining the old stylesheet generating design
-forward into future versions of Elm.
+This is a fork of [elm-css](https://github.com/rtfeldman/elm-css). Elm-css is
+abandoning support for generating CSS files and moving to locally scoped CSS
+rules. The original author believes the new locally scoped design is the One
+True Way and will be devoting his energy to the new design. This fork is ensure
+that the 11.x branch (the last version before the design change) of elm-css
+will be ported to future versions of Elm. This fork is commited to maintaining
+the old stylesheet generating design forward into future versions of Elm.
+
+If you like using Elm to write CSS rules, i.e. you like the power and
+flexibility of a fully featured functional programming language compared to
+Sass, Less, or other css preprocessors, then this is the project for you.
 
 
 
