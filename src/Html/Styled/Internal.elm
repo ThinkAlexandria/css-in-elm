@@ -124,6 +124,7 @@ unstyleWith resolver toNode finishNode elemType maybePair attributes children =
     if Dict.isEmpty allStyles then
         -- If we have no styles to speak of, don't emit a <style>
         toNode elemType finalAttributes finalChildNodes
+
     else
         let
             finalNode =
@@ -286,6 +287,7 @@ getUnusedKey default pairs =
             in
             if containsKey newKey rest then
                 getUnusedKey newKey rest
+
             else
                 newKey
 
@@ -299,5 +301,6 @@ containsKey key pairs =
         ( str, _ ) :: rest ->
             if key == str then
                 True
+
             else
                 containsKey key rest

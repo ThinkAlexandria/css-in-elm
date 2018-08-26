@@ -1,4 +1,4 @@
-module Css.Structure exposing (..)
+module Css.Structure exposing (Compatible(..), Declaration(..), KeyframeProperty, MediaExpression, MediaQuery(..), MediaType(..), Number, Property, PseudoElement(..), RepeatableSimpleSelector(..), Selector(..), SelectorCombinator(..), SimpleSelectorSequence(..), StyleBlock(..), Stylesheet, TypeSelector(..), appendProperty, appendPseudoElementToLastSelector, appendRepeatable, appendRepeatableSelector, appendRepeatableToLastSelector, appendRepeatableWithCombinator, appendToLastSelector, applyPseudoElement, concatMapLast, concatMapLastStyleBlock, dropEmpty, dropEmptyDeclarations, extendLastSelector, mapLast, withPropertyAppended)
 
 {-| A representation of the structure of a stylesheet. This module is concerned
 solely with representing valid stylesheets; it is not concerned with the
@@ -227,8 +227,8 @@ extendLastSelector selector declarations =
                 (MediaRule newMediaQueries newStyleBlocks) :: [] ->
                     [ MediaRule newMediaQueries (first :: newStyleBlocks) ]
 
-                _ as declarations ->
-                    declarations
+                _ as unhandledDeclarations ->
+                    unhandledDeclarations
 
         (SupportsRule str nestedDeclarations) :: [] ->
             [ SupportsRule str (extendLastSelector selector nestedDeclarations) ]
@@ -326,8 +326,8 @@ concatMapLastStyleBlock update declarations =
                 (MediaRule newMediaQueries newStyleBlocks) :: [] ->
                     [ MediaRule newMediaQueries (first :: newStyleBlocks) ]
 
-                _ as declarations ->
-                    declarations
+                _ as unhandledDeclarations ->
+                    unhandledDeclarations
 
         (SupportsRule str nestedDeclarations) :: [] ->
             [ SupportsRule str (concatMapLastStyleBlock update nestedDeclarations) ]
@@ -439,18 +439,21 @@ dropEmptyDeclarations declarations =
         ((StyleBlockDeclaration (StyleBlock _ _ properties)) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
         ((MediaRule _ styleBlocks) as declaration) :: rest ->
             if List.all (\(StyleBlock _ _ properties) -> List.isEmpty properties) styleBlocks then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
         ((SupportsRule _ otherDeclarations) as declaration) :: rest ->
             if List.isEmpty otherDeclarations then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
@@ -460,35 +463,41 @@ dropEmptyDeclarations declarations =
         ((PageRule _ properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
         ((FontFace properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
         ((Keyframes _ properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
         ((Viewport properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
         ((CounterStyle properties) as declaration) :: rest ->
             if List.isEmpty properties then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest
 
         ((FontFeatureValues tuples) as declaration) :: rest ->
             if List.all (\( _, properties ) -> List.isEmpty properties) tuples then
                 dropEmptyDeclarations rest
+
             else
                 declaration :: dropEmptyDeclarations rest

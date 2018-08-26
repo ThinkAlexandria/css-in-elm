@@ -25,7 +25,7 @@ charsetToString charset =
 importToString : ( String, List MediaQuery ) -> String
 importToString ( name, mediaQueries ) =
     -- TODO
-    "@import \"" ++ name ++ toString mediaQueries ++ "\""
+    "@import \"" ++ name ++ "[" ++ String.join "," (List.map mediaQueryToString mediaQueries) ++ "]\""
 
 
 namespaceToString : ( String, String ) -> String
@@ -75,7 +75,7 @@ prettyPrintDeclaration declaration =
             "@media " ++ query ++ " {\n" ++ blocks ++ "\n}"
 
         _ ->
-            Debug.crash "not yet implemented :x"
+            "TODO not yet implemented :x"
 
 
 mediaQueryToString : MediaQuery -> String
@@ -140,6 +140,7 @@ simpleSelectorSequenceToString simpleSelectorSequence =
         UniversalSelectorSequence repeatableSimpleSelectors ->
             if List.isEmpty repeatableSimpleSelectors then
                 "*"
+
             else
                 List.map repeatableSimpleSelectorToString repeatableSimpleSelectors
                     |> String.join ""
@@ -188,7 +189,7 @@ selectorToString (Selector simpleSelectorSequence chain pseudoElement) =
     segments
         |> List.filter (not << String.isEmpty)
         |> String.join " "
-        |> flip (++) pseudoElementsString
+        |> (\a -> (++) a pseudoElementsString)
 
 
 combinatorToString : SelectorCombinator -> String
@@ -213,6 +214,7 @@ prettyPrintProperty { key, value, important } =
         suffix =
             if important then
                 " !important;"
+
             else
                 ";"
     in

@@ -1,6 +1,6 @@
 {
   "name": "elm-css",
-  "version": "0.7.0-beta",
+  "version": "0.7.0",
   "description": "Elm-based CSS Preprocessor",
   "main": "index.js",
   "bin": {
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rtfeldman/elm-css.git"
+    "url": "git+https://github.com/ThinkAlexandria/css-in-elm.git"
   },
   "keywords": [
     "elm",
@@ -23,12 +23,12 @@
     "less",
     "preprocessor"
   ],
-  "author": "Richard Feldman <richard.t.feldman@gmail.com>",
+  "author": "YetAnotherMinion <npmjs@thinkalexandria.com>",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/rtfeldman/elm-css/issues"
+    "url": "https://github.com/ThinkAlexandria/css-in-elm/issues"
   },
-  "homepage": "https://github.com/rtfeldman/elm-css#readme",
+  "homepage": "https://github.com/ThinkAlexandria/css-in-elm#readme",
   "dependencies": {
     "binstall": "1.2.0",
     "chalk": "2.1.0",

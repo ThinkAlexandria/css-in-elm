@@ -4,7 +4,7 @@ module Css.Preprocess.Resolve exposing (compile)
 Structure data structures and gathering warnings along the way.
 -}
 
-import Css.Preprocess as Preprocess exposing (Snippet(Snippet), SnippetDeclaration, Style(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
+import Css.Preprocess as Preprocess exposing (Snippet(..), SnippetDeclaration, Style(..), unwrapSnippet)
 import Css.Structure as Structure exposing (mapLast)
 import Css.Structure.Output as Output
 import String
@@ -187,7 +187,8 @@ resolveFontFeatureValues tuples =
                             expandTuples rest
                     in
                     ( warnings ++ nextWarnings, ( str, properties ) :: nextTuples )
-
+    in
+    let
         ( warnings, newTuples ) =
             expandTuples tuples
     in
@@ -295,7 +296,7 @@ applyStyles styles declarations =
                 (Structure.appendRepeatableToLastSelector selector)
                 declarations
 
-        (NestSnippet selectorCombinator snippets) :: rest ->
+        (NestSnippet selectorCombinator nestSnippets) :: rest ->
             let
                 chain : Structure.Selector -> Structure.Selector -> Structure.Selector
                 chain (Structure.Selector originalSequence originalTuples originalPseudoElement) (Structure.Selector newSequence newTuples newPseudoElement) =
@@ -317,8 +318,8 @@ applyStyles styles declarations =
                                         [] ->
                                             []
 
-                                        first :: rest ->
-                                            [ Structure.StyleBlockDeclaration (Structure.StyleBlock first rest [])
+                                        first :: remaining ->
+                                            [ Structure.StyleBlockDeclaration (Structure.StyleBlock first remaining [])
                                             ]
                             in
                             [ applyStyles nestedStyles newDeclarations ]
@@ -352,7 +353,7 @@ applyStyles styles declarations =
                         Preprocess.FontFeatureValues tuples ->
                             resolveFontFeatureValues tuples
             in
-            snippets
+            nestSnippets
                 |> List.concatMap unwrapSnippet
                 |> List.map expandDeclaration
                 |> (++) [ applyStyles rest declarations ]
@@ -442,9 +443,10 @@ applyNestedStylesToLast nestedStyles rest f declarations =
         newDeclarations =
             case ( List.head nextResult.declarations, List.head <| List.reverse declarations ) of
                 ( Just nextResultParent, Just originalParent ) ->
-                    List.take (List.length declarations - 1) declarations
+                    List.reverse (Maybe.withDefault [] (List.tail (List.reverse declarations)))
                         ++ [ if originalParent /= nextResultParent then
                                 nextResultParent
+
                              else
                                 originalParent
                            ]

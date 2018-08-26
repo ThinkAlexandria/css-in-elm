@@ -1,4 +1,7 @@
-module Css.File exposing (CssCompilerProgram, CssFileStructure, UniqueClass, UniqueSvgClass, compile, compiler, toFileStructure, uniqueClass, uniqueSvgClass)
+module Css.File exposing
+    ( compile, compiler, toFileStructure, CssFileStructure, CssCompilerProgram
+    , UniqueClass, uniqueClass, UniqueSvgClass, uniqueSvgClass
+    )
 
 {-| Functions for writing CSS files from elm-css.
 
@@ -62,8 +65,8 @@ compile =
 -}
 compiler : (CssFileStructure -> Cmd Never) -> CssFileStructure -> CssCompilerProgram
 compiler filesPort structure =
-    Platform.program
-        { init = ( (), filesPort structure )
+    Platform.worker
+        { init = \flags -> ( (), filesPort structure )
         , update = \_ _ -> ( (), Cmd.none )
         , subscriptions = \_ -> Sub.none
         }

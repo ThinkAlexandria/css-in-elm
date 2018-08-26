@@ -1,4 +1,13 @@
-module Css.Elements exposing (a, article, aside, audio, blockquote, body, button, canvas, caption, circle, code, col, colgroup, dd, div, dl, dt, ellipse, em, fieldset, footer, form, h1, h2, h3, h4, h5, h6, header, hr, html, i, img, input, label, legend, li, line, main_, menu, nav, ol, optgroup, option, p, path, polygon, polyline, pre, progress, q, rect, section, select, small, span, strong, svg, table, tbody, td, textarea, tfoot, th, thead, time, tr, typeSelector, ul, video)
+module Css.Elements exposing
+    ( typeSelector, html, body
+    , article, header, footer, h1, h2, h3, h4, h5, h6, nav, menu, section, aside, time
+    , div, hr, li, main_, ol, p, ul, pre, dl, dt, dd, blockquote
+    , a, code, small, span, strong, i, em, q
+    , img, audio, video, canvas
+    , caption, col, colgroup, table, tbody, td, tfoot, th, thead, tr
+    , button, fieldset, form, input, label, legend, optgroup, option, progress, select, textarea
+    , svg, path, rect, circle, ellipse, line, polyline, polygon
+    )
 
 {-| Selectors for HTML elements.
 
@@ -44,15 +53,15 @@ module Css.Elements exposing (a, article, aside, audio, blockquote, body, button
 
 -}
 
-import Css.Preprocess exposing (Snippet(Snippet), SnippetDeclaration(StyleBlockDeclaration), Style, StyleBlock(StyleBlock))
+import Css.Preprocess exposing (Snippet(..), SnippetDeclaration(..), Style, StyleBlock(..))
 import Css.Structure as Structure
 
 
 {-| Define a custom element.
 
     stylesheet
-      [ typeSelector "aside" [ display block ]
-      ]
+        [ typeSelector "aside" [ display block ]
+        ]
 
 ...outputs
 
@@ -256,7 +265,7 @@ pre =
 
 {-| Selector for a dl element.
 
-    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
+    https :// developer.mozilla.org / en - US / docs / Web / HTML / Element / dl
 
 -}
 dl : List Style -> Snippet
@@ -266,7 +275,7 @@ dl =
 
 {-| Selector for a dt element.
 
-    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dt
+    https :// developer.mozilla.org / en - US / docs / Web / HTML / Element / dt
 
 -}
 dt : List Style -> Snippet
@@ -276,7 +285,7 @@ dt =
 
 {-| Selector for a dd element.
 
-    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd
+    https :// developer.mozilla.org / en - US / docs / Web / HTML / Element / dd
 
 -}
 dd : List Style -> Snippet

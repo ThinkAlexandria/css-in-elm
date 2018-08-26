@@ -1,17 +1,19 @@
 module Css.Namespace exposing (namespace)
 
 {-| Namespacing
+
 @docs namespace
+
 -}
 
 import Css.Helpers exposing (identifierToString, toCssIdentifier)
-import Css.Preprocess as Preprocess exposing (Snippet(Snippet), SnippetDeclaration, Style(AppendProperty, ExtendSelector, NestSnippet), unwrapSnippet)
-import Css.Structure as Structure exposing (RepeatableSimpleSelector(ClassSelector, IdSelector, PseudoClassSelector), SimpleSelectorSequence(CustomSelector, TypeSelectorSequence, UniversalSelectorSequence), mapLast)
+import Css.Preprocess as Preprocess exposing (Snippet(..), SnippetDeclaration, Style(..), unwrapSnippet)
+import Css.Structure as Structure exposing (RepeatableSimpleSelector(..), SimpleSelectorSequence(..), mapLast)
 
 
 {-| takes an identifier, namespaces the list of snippets given with that identifier
 -}
-namespace : a -> List Snippet -> List Snippet
+namespace : String -> List Snippet -> List Snippet
 namespace rawIdentifier snippets =
     List.map (applyNamespaceToSnippet (toCssIdentifier rawIdentifier)) snippets
 

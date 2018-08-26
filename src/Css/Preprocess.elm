@@ -1,4 +1,4 @@
-module Css.Preprocess exposing (..)
+module Css.Preprocess exposing (Property, Snippet(..), SnippetDeclaration(..), Style(..), StyleBlock(..), Stylesheet, mapAllLastProperty, mapLastProperty, propertyToPair, stylesheet, toMediaRule, toPropertyPairs, unwrapSnippet)
 
 {-| A representation of the preprocessing to be done. The elm-css DSL generates
 the data structures found in this module.
@@ -138,8 +138,8 @@ unwrapSnippet (Snippet declarations) =
 
 
 toPropertyPairs : List Style -> List ( String, String )
-toPropertyPairs styles =
-    case styles of
+toPropertyPairs inputStyles =
+    case inputStyles of
         [] ->
             []
 
@@ -159,6 +159,7 @@ propertyToPair property =
         value =
             if property.important then
                 property.value ++ " !important"
+
             else
                 property.value
     in
