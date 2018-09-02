@@ -13,7 +13,7 @@ const fs = require("fs-extra"),
   classNameForValue = require("./generate-class-modules").classNameForValue,
   path = require("path");
 
-// TODO also need to write elm-package.json in that directory.
+// TODO also need to write elm.json in that directory.
 function writeMain(
   filename /*:string */,
   modules /*: Array<ModuleDeclaration> */
@@ -52,7 +52,7 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
     // Note: This must take flags so that `getStructure` is not evaluated on
     // startup. We need it to be delayed by 1 tick so we have a chance for
     // hack-main.js to take effect first!
-    "    Platform.programWithFlags\n" +
+    "    Platform.worker\n" +
     "        { init = \\flags -> ( (), filesPort (getStructure ()) )\n" +
     "        , update = \\_ _ -> ( (), Cmd.none )\n" +
     "        , subscriptions = \\_ -> Sub.none\n" +

@@ -5,6 +5,7 @@ module.exports = function hackMain(
   repository /*: string */,
   mainFilename /*: string */
 ) {
+  console.log("mainFilename", mainFilename);
   return new Promise(function(resolve, reject) {
     fs.readFile(mainFilename, { encoding: "utf8" }, function(readError, main) {
       if (readError) return reject(readError);
@@ -19,7 +20,7 @@ module.exports = function hackMain(
       // nobody can depend on the contents of these values--which they never should!
       const injection =
         namespacer +
-        "Main$classToSnippet = F2(function(className, styles) { return A2(_rtfeldman$elm_css$Css$class, className, styles._0); });";
+        "Main$classToSnippet = F2(function(className, styles) { return A2(_ThinkAlexandria$css_in_elm$Css$class, className, styles._0); });";
 
       const newMain = [
         main.slice(0, injectionPoint),
@@ -49,7 +50,7 @@ function repositoryToNativePackageName(repository /*:string*/) {
 
     //"A dot in repository name breaks `elm-make`" https://github.com/elm-lang/elm-make/issues/106
     if (userName.indexOf(".") >= 0 || repoName.indexOf(".") >= 0) {
-      throw "Elm currently doesn't support having periods in the user/project part of the repository field of elm-package.json. Aborting test run.";
+      throw "Elm currently doesn't support having periods in the user/project part of the repository field of elm.json. Aborting test run.";
     }
     // From the above example, return "rtfeldman$node_test_runner"
     return [userName, repoName].map(name => name.replace(/-/g, "_")).join("$");

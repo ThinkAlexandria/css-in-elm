@@ -1,4 +1,4 @@
-module Media exposing (..)
+module Media exposing (CssClasses(..), basicMediaQuery, expectFeatureWorks, mediaFeatures, mediaTypes, testFeature, testMedia, testMediaQuery, testMediaType, testUnparameterizedFeature, testWithMedia, testWithMediaQuery)
 
 import Css exposing (..)
 import Css.Elements exposing (a, body, button, p)
@@ -178,7 +178,7 @@ expectFeatureWorks featureName n ( component, expectedStr ) =
         expected =
             "@media (" ++ featureName ++ ": " ++ expectedStr ++ ") {" ++ expectedBody ++ "    }\n}"
     in
-    test ("pretty prints the expected feature output for:" ++ featureName ++ toString n) <| \() -> Expect.equal expected actual
+    test ("pretty prints the expected feature output for:" ++ featureName ++ Debug.toString n) <| \() -> Expect.equal expected actual
 
 
 basicMediaQuery : MediaQuery -> Snippet
@@ -263,7 +263,7 @@ testWithMedia =
                     [ Css.color (hex "FF0000")
                     , withMedia [ only print [] ] [ textDecoration none ]
                     ]
-                , class Container
+                , class (Debug.toString Container)
                     [ Css.maxWidth (px 800)
                     , withMedia [ only screen [ Media.maxWidth (px 375) ], only screen [ Media.maxHeight (px 667) ] ]
                         [ Css.maxWidth (px 300) ]

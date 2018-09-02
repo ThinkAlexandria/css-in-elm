@@ -8,6 +8,7 @@ const elmCss = require("../"),
   path = require("path"),
   pkg = require("../package.json");
 
+var sourcePath = null;
 program
   .version(pkg.version)
   .usage("PATH # path to your Stylesheets.elm file")
@@ -17,14 +18,23 @@ program
     path.join(process.cwd(), "build")
   )
   .option("-m, --pathToMake [pathToMake]", "(optional) path to elm-make")
+  .action(function(src) {
+    sourcePath = src;
+  })
   .parse(process.argv);
 
-const headline = "elm-css " + pkg.version;
+if(!sourcePath) {
+  console.log(chalk.red("You must specifiy a path to your Stylesheets.elm file. See the README for information on how to build a Stylesheets.elm file."));
+  program.outputHelp();
+  process.exit(1);
+}
+
+const headline = "css-in-elm " + pkg.version;
 const bar = _.repeat("-", headline.length);
 
 console.log("\n" + headline + "\n" + bar + "\n");
 
-elmCss(process.cwd(), program.output, program.pathToMake)
+elmCss(process.cwd(), sourcePath, program.output, program.pathToMake)
   .then(function(results) {
     console.log(chalk.green("Success! I created these css files:"));
     results.forEach(function(result) {

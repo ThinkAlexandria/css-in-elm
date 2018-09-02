@@ -5447,7 +5447,7 @@ featureTag2 tag value =
                 |> List.filter Tuple.first
                 |> List.map Tuple.second
     in
-    { value = tag ++ " " ++ String.fromInt value
+    { value = "\"" ++ tag ++ "\" " ++ String.fromInt value
     , featureTagValue = Compatible
     , warnings = warnings
     }
@@ -6836,8 +6836,8 @@ fontFace value =
 
 -}
 qt : String -> String
-qt =
-    identity
+qt v =
+    "\"" ++ v ++ "\""
 
 
 {-| For when your font is one of [`serif`](#serif), [`sansSerif`](#sansSerif), [`monospace`](#monospace), [`cursive`](#cursive) or [`fantasy`](#fantasy).

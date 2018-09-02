@@ -115,7 +115,7 @@ body {
 }
 ```
 
-As with `class MenuItem`, when you use `id Welcome`, `elm-css` calls `toString` on the union type `Welcome` before prepending `"homepage"` from the `namespace` and `"#"` from the `id` function to arrive at `#homepageMenuItem`.
+As with `class MenuItem`, when you use `id Welcome`, `css-in-elm` calls `toString` on the union type `Welcome` before prepending `"homepage"` from the `namespace` and `"#"` from the `id` function to arrive at `#homepageMenuItem`.
 
 Note that `rgb` is a normal Elm function, so you call it as `(rgb 10 11 12)`
 in order to get the output of `rgb(10, 11, 12)`.
@@ -310,7 +310,7 @@ ul > li {
 
 This demonstrates two different ways to do a media query. First, at the top level just like you would in CSS, with `media "print"` followed by a `body` selector and some styles. Second, using `with` to nest a media query within a `ul` selector. In either case, you end up with a top-level `@media` declaration in the compiled CSS.
 
-This also introduces how to use selector combinators: in this case the [child combinator](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_selectors), represented in CSS as the `>` operator and in `elm-css` as the `children` function. (By design, there is no operator equivalent in `elm-css`) There is also a `descendants`  function, an `adjacentSiblings` function, and so on.
+This also introduces how to use selector combinators: in this case the [child combinator](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_selectors), represented in CSS as the `>` operator and in `css-in-elm` as the `children` function. (By design, there is no operator equivalent in `css-in-elm`) There is also a `descendants`  function, an `adjacentSiblings` function, and so on.
 
 Note that `zero` compiles to `0` with no units. The `padding` function
 is ordinarily expecting a value with units associated, but `zero` works too.
@@ -323,7 +323,7 @@ handling CSS properties that accept different numbers of arguments. In addition
 to `margin2`, there is also `margin` (e.g. `margin (em 2)` would compile to
 `margin: 2em;`) as well as `margin3` and `margin4`.
 
-Finally, note that `margin` accepts `auto` instead of a number with units associated. If you try to pass `auto` to `padding`, however, you will get a type error; according to the CSS specification, `auto` is a legal value for `margin` but not for `padding`, and `elm-css` is aware of this.
+Finally, note that `margin` accepts `auto` instead of a number with units associated. If you try to pass `auto` to `padding`, however, you will get a type error; according to the CSS specification, `auto` is a legal value for `margin` but not for `padding`, and `css-in-elm` is aware of this.
 
 ## Mixins
 

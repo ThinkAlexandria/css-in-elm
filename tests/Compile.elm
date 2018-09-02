@@ -1,21 +1,23 @@
-module Compile exposing (..)
+module Compile exposing (colorWarnings, compileTest, dreamwriter, getRgbWarnings, getRgbaWarnings, unstyledDiv)
 
 import CompileFixtures
 import Css exposing (..)
 import Expect
-import Fuzz exposing (Fuzzer, tuple3, tuple4)
+import Fuzz exposing (Fuzzer, tuple3)
 import Test exposing (..)
 import TestUtil exposing (..)
 
 
-getRgbaWarnings : ( Int, Int, Int, Float ) -> Int
-getRgbaWarnings ( red, green, blue, alpha ) =
+getRgbaWarnings : { record | red: Int, green: Int, blue: Int, alpha: Float } -> Int
+getRgbaWarnings { red, green, blue, alpha } =
     rgba red green blue alpha |> .warnings |> List.length
 
 
 getRgbWarnings : ( Int, Int, Int ) -> Int
 getRgbWarnings ( red, green, blue ) =
     rgb red green blue |> .warnings |> List.length
+
+
 
 
 colorWarnings : Test
@@ -36,19 +38,19 @@ colorWarnings =
                 (getRgbWarnings >> Expect.equal 1)
             ]
         , describe "rgba"
-            [ fuzz (tuple4 ( validRgbValue, validRgbValue, validRgbValue, validAlphaValue ))
+            [ fuzz (mapRgbaRecord validRgbValue validRgbValue validRgbValue validAlphaValue )
                 "does not warn when everything is valid"
                 (getRgbaWarnings >> Expect.equal 0)
-            , fuzz (tuple4 ( invalidRgbValue, validRgbValue, validRgbValue, validAlphaValue ))
+            , fuzz (mapRgbaRecord invalidRgbValue validRgbValue validRgbValue validAlphaValue )
                 "warns for invalid r values"
                 (getRgbaWarnings >> Expect.equal 1)
-            , fuzz (tuple4 ( validRgbValue, invalidRgbValue, validRgbValue, validAlphaValue ))
+            , fuzz (mapRgbaRecord validRgbValue invalidRgbValue validRgbValue validAlphaValue )
                 "warns for invalid g values"
                 (getRgbaWarnings >> Expect.equal 1)
-            , fuzz (tuple4 ( validRgbValue, validRgbValue, invalidRgbValue, validAlphaValue ))
+            , fuzz (mapRgbaRecord validRgbValue validRgbValue invalidRgbValue validAlphaValue )
                 "warns for invalid b values"
                 (getRgbaWarnings >> Expect.equal 1)
-            , fuzz (tuple4 ( validRgbValue, validRgbValue, validRgbValue, invalidAlphaValue ))
+            , fuzz (mapRgbaRecord validRgbValue validRgbValue validRgbValue invalidAlphaValue )
                 "warns for invalid a values"
                 (getRgbaWarnings >> Expect.equal 1)
             ]

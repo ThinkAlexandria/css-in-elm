@@ -20,9 +20,7 @@ module.exports = function compileAll(
       output: "/dev/null",
       verbose: false,
       cwd: cwd,
-      yes: true,
       pathToMake: pathToMake,
-      warn: true,
       processOpts: { stdio: ["ignore", "ignore", "inherit"] }
     });
 

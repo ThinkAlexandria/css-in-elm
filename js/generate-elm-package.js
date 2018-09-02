@@ -9,7 +9,7 @@ module.exports = function writeGeneratedElmPackage(
 ) {
   const originalElmPackage = path.join(
     originalElmPackageDir,
-    "elm-package.json"
+    "elm.json"
   );
 
   return fs.readJson(originalElmPackage).then(function(elmPackageContents) {
@@ -20,19 +20,19 @@ module.exports = function writeGeneratedElmPackage(
       });
 
     elmPackageContents["source-directories"] = [
-      // Include elm-stuff/generated-code/rtfeldman/elm-css/src
+      // Include elm-stuff/generated-code/ThinkAlexandria/css-in-elm/src
       // since we'll be generating Main.elm in there.
       generatedSrc
     ].concat(sourceDirs);
 
-    // Generate the new elm-package.json
+    // Generate the new elm.json
     return new Promise(function(resolve, reject) {
       fs.writeFile(
-        path.join(generatedDir, "elm-package.json"),
+        path.join(generatedDir, "elm.json"),
         JSON.stringify(elmPackageContents, null, 4),
         function(writeError) {
           if (writeError)
-            reject("Error writing generated elm-package.json: " + writeError);
+            reject("Error writing generated elm.json: " + writeError);
 
           resolve(elmPackageContents["repository"]);
         }

@@ -1,4 +1,4 @@
-module CompileFixtures exposing (..)
+module CompileFixtures exposing (CssClasses(..), CssIds(..), basicStyle1, basicStyle2, dreamwriter, pageBackground, pageDefaultText, unstyledDiv)
 
 import Css exposing (..)
 import Css.Elements exposing (..)
@@ -24,6 +24,8 @@ type CssClasses
 type CssIds
     = Page
 
+class = Debug.toString >> Css.class
+id = Debug.toString >> Css.id
 
 unstyledDiv : Stylesheet
 unstyledDiv =

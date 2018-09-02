@@ -18,7 +18,7 @@ function findExposedValues(
 ) {
   return new Promise(function(resolve, reject) {
     function finish() {
-      var process = spawn(readElmiPath, ["--path", elmPackageJsonPath]);
+      var process = spawn("elmi-to-json", [], {cwd: elmPackageJsonPath });
       var jsonStr = "";
       var stderrStr = "";
 
@@ -79,9 +79,10 @@ function findExposedValues(
           .catch(reject);
       });
     }
+    return finish();
 
     if (fs.existsSync(readElmiPath)) {
-      // elm-interface-to-json was already downloaded successfully. We're good!
+      // elmi-to-json was already downloaded successfully. We're good!
       return finish();
     } else {
       // it wasn't downloaded, possibly because we were installed with

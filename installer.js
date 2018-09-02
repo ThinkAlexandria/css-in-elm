@@ -26,7 +26,7 @@ module.exports = function(verbose /*: ?bool */) {
     path.join(binariesDir, "elm-interface-to-json" + binaryExtension)
   ];
   const errorMessage =
-    "Unfortunately, there are no elm-test " +
+    "Unfortunately, there are no elm-css " +
     binVersion +
     " binaries available on your operating system and architecture.\n\nIf you would like to build Elm from source, there are instructions at https://github.com/elm-lang/elm-platform#build-from-source\n";
 

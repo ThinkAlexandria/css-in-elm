@@ -1,4 +1,4 @@
-module Fixtures exposing (..)
+module Fixtures exposing (CssAnimations(..), CssClasses(..), CssIds(..), atRule, backgrounds, borders, bug140, bug99, colorHexAbbrWarning, colorHexWarning, divWidthHeight, fontStylesheet, fontWeightWarning, greenOnHover, keyValue, leftRightTopBottom, manualUnderlineOnHoverStylesheet, mediaQueryIndentation, multiDescendent, multiSelector, nestedAtRule, pseudoClassStylesheet, pseudoElementStylesheet, simpleEach, styleGreenOnHoverStylesheet, styleUnderlineOnHoverStylesheet, transformsStylesheet, underlineOnHover, universal, unstyledDiv)
 
 import Css exposing (..)
 import Css.Elements exposing (..)
@@ -17,6 +17,10 @@ type CssIds
 type CssAnimations
     = Wobble
 
+class = Debug.toString >> Css.class
+id = Debug.toString >> Css.id
+
+withClass = Debug.toString >> Css.withClass
 
 unstyledDiv : Stylesheet
 unstyledDiv =

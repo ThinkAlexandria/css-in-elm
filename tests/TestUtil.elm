@@ -1,4 +1,4 @@
-module TestUtil exposing (..)
+module TestUtil exposing (invalidAlphaValue, invalidRgbValue, outdented, prettyPrint, validAlphaValue, validRgbValue, mapRgbaRecord)
 
 import Css exposing (Snippet, rgb, rgba)
 import Fuzz exposing (Fuzzer)
@@ -22,6 +22,7 @@ prettyPrint sheet =
     in
     if List.isEmpty warnings then
         css
+
     else
         "Invalid Stylesheet:\n" ++ String.join "\n" warnings
 
@@ -34,6 +35,11 @@ validRgbValue =
 validAlphaValue : Fuzzer Float
 validAlphaValue =
     Fuzz.floatRange 0 1
+
+mapRgbaRecord : Fuzzer Int -> Fuzzer Int -> Fuzzer Int -> Fuzzer Float -> Fuzzer { red: Int, green: Int, blue: Int, alpha: Float }
+mapRgbaRecord =
+    Fuzz.map4
+        (\r g b a -> { red = r, green = g, blue = b, alpha = a })
 
 
 invalidRgbValue : Fuzzer Int

@@ -78,7 +78,7 @@ See [`compiler`](#compiler).
 
 -}
 type alias CssCompilerProgram =
-    Program Never () Never
+    Program {} () Never
 
 
 {-| Styles scoped under an automatically-generated class.

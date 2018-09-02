@@ -17,16 +17,17 @@ const _ = require("lodash"),
 
 const binaryExtension = process.platform === "win32" ? ".exe" : "";
 const readElmiPath =
-  path.join(__dirname, "bin", "elm-interface-to-json") + binaryExtension;
+  path.join(__dirname, "bin", "elmi-to-json") + binaryExtension;
 const jsEmitterFilename = "emitter.js";
 
 module.exports = function(
   projectDir /*: string*/,
+  stylesheetsPath /*: string*/,
   outputDir /*: string */,
   pathToMake /*: ?string */
 ) {
   const cssSourceDir = path.join(projectDir, "css");
-  const cssElmPackageJson = path.join(cssSourceDir, "elm-package.json");
+  const cssElmPackageJson = path.join(cssSourceDir, "elm.json");
 
   if (!fs.existsSync(cssElmPackageJson)) {
     mkdirp.sync(cssSourceDir);
@@ -39,8 +40,8 @@ module.exports = function(
     projectDir,
     "elm-stuff",
     "generated-code",
-    "rtfeldman",
-    "elm-css"
+    "ThinkAlexandria",
+    "css-in-elm"
   );
 
   // Symlink our existing elm-stuff into the generated code,
@@ -59,13 +60,19 @@ module.exports = function(
   }
 
   const generatedSrc = path.join(generatedDir, "src");
-  const mainFilename = path.join(generatedSrc, "Main.elm");
+  const mainFilename = path.join(generatedSrc, "Stylesheets.elm");
+
+
 
   const makeGeneratedSrcDir = new Promise(function(resolve, reject) {
     mkdirp(generatedSrc, function(error) {
       if (error) reject(error);
 
-      resolve();
+      fs.copy(stylesheetsPath, mainFilename, function(err) {
+        if (err) reject(err);
+        
+        resolve();
+      });
     });
   });
 
@@ -76,21 +83,26 @@ module.exports = function(
   ]).then(function(promiseOutputs) {
     const repository /*: string */ = promiseOutputs[0];
 
-    return findExposedValues(
-      ["Css.File.UniqueClass", "Css.Snippet"],
-      readElmiPath,
-      generatedDir,
-      elmFilePaths,
-      [cssSourceDir],
-      true
-    ).then(function(modules) {
-      return Promise.all(
-        [writeMain(mainFilename, modules)].concat(
-          modules.map(function(modul) {
-            return writeFile(path.join(generatedDir, "styles"), modul);
-          })
-        )
-      ).then(function() {
+    // This part below is not used because we are using the Stylesheets.elm input format
+    // instead of generating our own Main.elm file
+    //
+    //return findExposedValues(
+    //  ["Css.File.UniqueClass", "Css.Snippet"],
+    //  readElmiPath,
+    //  generatedDir,
+    //  elmFilePaths,
+    //  [cssSourceDir],
+    //  true
+    //)
+    //.then(function(modules) {
+    //  return Promise.all(
+    //    [writeMain(mainFilename, modules)].concat(
+    //      modules.map(function(modul) {
+    //        return writeFile(path.join(generatedDir, "styles"), modul);
+    //      })
+    //    )
+    //  )
+    //  .then(function() {
         return emit(
           mainFilename,
           repository,
@@ -98,8 +110,8 @@ module.exports = function(
           generatedDir,
           pathToMake
         ).then(writeResults(outputDir));
-      });
-    });
+      //});
+    //});
   });
 };
 
@@ -113,13 +125,12 @@ function emit(
   // Compile the js file.
   return compileEmitter(src, {
     output: dest,
-    yes: true,
     cwd: cwd,
     pathToMake: pathToMake
   })
-    .then(function() {
-      return hackMain(repository, dest);
-    })
+    //.then(function() {
+    //  return hackMain(repository, dest);
+    //})
     .then(function() {
       return extractCssResults(dest);
     });
