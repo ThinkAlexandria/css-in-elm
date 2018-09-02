@@ -20,7 +20,7 @@ module Css.Media exposing
 
 {-| Functions for building `@media` queries.
 
-[[[https://developer.mozilla.org/en-US/docs/Web/CSS/Media\_Queries/Using\_media\_queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)
+[[[[[https://developer.mozilla.org/en-US/docs/Web/CSS/Media\_Queries/Using\_media\_queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)
 
 
 # Data Structures
@@ -106,7 +106,7 @@ type alias MediaQuery =
 
 {-| A media type.
 
-[[[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media\_types](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)
+[[[[[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media\_types](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_types)
 
 -}
 type alias MediaType =
@@ -124,7 +124,7 @@ In the media query `screen and (min-width: 768px)`,
   - `min-width` is a media feature, and
   - `(min-width: 768px)` is an expression.
 
-[[[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media\_features](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)
+[[[[[https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media\_features](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)
 
 -}
 type alias Expression =

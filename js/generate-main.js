@@ -30,7 +30,10 @@ function writeMain(
 }
 
 function generateMain(modules /*: Array<ModuleDeclaration> */) {
-  const otherModules = ["Css", "Css.File", "Platform", "Json.Decode"]; // Json.Decode is needed to avoid a bug in Elm 0.18 where port modules need it to be imported; may be able to remove that import in 0.19
+  // TODO pass the name of the Stylesheets module where the user defines their
+  // css stylesheet mappings in `modules`. Right now we just hardcode the name
+  // in the `otherModules` below.
+  const otherModules = ["Css", "Css.File", "Platform", "Stylesheets"];
   const imports = otherModules
     .concat(_.map(modules, "name"))
     .map(function(importName) {
@@ -38,12 +41,16 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
     })
     .join("\n");
 
+
   const fileStructure =
     "fileStructure : () -> Css.File.CssFileStructure\n" +
     "fileStructure _ =\n" +
-    "    Css.File.toFileStructure\n        [ " +
-    modules.map(generateModule).join("\n        , ") +
-    "\n        ]";
+    "    Css.File.toFileStructure <|\n" +
+    "        List.map\n" +
+    "           (\\(fileName, stylesheets) ->\n" + 
+    "               (fileName, Css.File.compile stylesheets)\n" +
+    "           )\n" +
+    "           Stylesheets.fileStructure";
 
   const end =
     "port files : Css.File.CssFileStructure -> Cmd msg\n\n\n" +
@@ -57,9 +64,6 @@ function generateMain(modules /*: Array<ModuleDeclaration> */) {
     "        , update = \\_ _ -> ( (), Cmd.none )\n" +
     "        , subscriptions = \\_ -> Sub.none\n" +
     "        }\n\n\n" +
-    "classToSnippet : String -> Css.File.UniqueClass -> Css.Snippet\n" +
-    "classToSnippet str class =\n" +
-    "    classToSnippet str class\n\n\n" + // This is just to make type-checking pass. We'll splice in a useful implementation after emitting.
     "main : Program () () Never\n" +
     "main =\n    compiler files fileStructure\n";
 

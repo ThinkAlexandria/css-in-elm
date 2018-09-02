@@ -22,7 +22,6 @@ const jsEmitterFilename = "emitter.js";
 
 module.exports = function(
   projectDir /*: string*/,
-  stylesheetsPath /*: string*/,
   outputDir /*: string */,
   pathToMake /*: ?string */
 ) {
@@ -60,19 +59,14 @@ module.exports = function(
   }
 
   const generatedSrc = path.join(generatedDir, "src");
-  const mainFilename = path.join(generatedSrc, "Stylesheets.elm");
-
+  const mainFilename = path.join(generatedSrc, "Main.elm");
 
 
   const makeGeneratedSrcDir = new Promise(function(resolve, reject) {
     mkdirp(generatedSrc, function(error) {
       if (error) reject(error);
 
-      fs.copy(stylesheetsPath, mainFilename, function(err) {
-        if (err) reject(err);
-        
-        resolve();
-      });
+      resolve();
     });
   });
 
@@ -86,23 +80,26 @@ module.exports = function(
     // This part below is not used because we are using the Stylesheets.elm input format
     // instead of generating our own Main.elm file
     //
-    //return findExposedValues(
-    //  ["Css.File.UniqueClass", "Css.Snippet"],
-    //  readElmiPath,
-    //  generatedDir,
-    //  elmFilePaths,
-    //  [cssSourceDir],
-    //  true
-    //)
-    //.then(function(modules) {
-    //  return Promise.all(
-    //    [writeMain(mainFilename, modules)].concat(
-    //      modules.map(function(modul) {
-    //        return writeFile(path.join(generatedDir, "styles"), modul);
-    //      })
-    //    )
-    //  )
-    //  .then(function() {
+    // Not quite sure what findExposedValues is doing, the format of the elmi
+    // files has changed in 0.19, so it will never return results right now
+    // anyway
+    return findExposedValues(
+      ["Css.File.UniqueClass", "Css.Snippet"],
+      readElmiPath,
+      generatedDir,
+      elmFilePaths,
+      [cssSourceDir],
+      true
+    )
+    .then(function(modules) {
+      return Promise.all(
+        [writeMain(mainFilename, modules)].concat(
+          modules.map(function(modul) {
+            return writeFile(path.join(generatedDir, "styles"), modul);
+          })
+        )
+      )
+      .then(function() {
         return emit(
           mainFilename,
           repository,
@@ -110,8 +107,8 @@ module.exports = function(
           generatedDir,
           pathToMake
         ).then(writeResults(outputDir));
-      //});
-    //});
+      });
+    });
   });
 };
 

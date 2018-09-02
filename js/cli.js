@@ -6,25 +6,25 @@ const elmCss = require("../"),
   chalk = require("chalk"),
   _ = require("lodash"),
   path = require("path"),
-  pkg = require("../package.json");
+  pkg = require("../package.json"),
+  fs = require("fs-extra");
 
-var sourcePath = null;
 program
   .version(pkg.version)
-  .usage("PATH # path to your Stylesheets.elm file")
+  .usage("")
   .option(
     "-o, --output [outputDir]",
     "(optional) directory in which to write CSS files. Defaults to build/",
     path.join(process.cwd(), "build")
   )
   .option("-m, --pathToMake [pathToMake]", "(optional) path to elm-make")
-  .action(function(src) {
-    sourcePath = src;
-  })
   .parse(process.argv);
 
-if(!sourcePath) {
-  console.log(chalk.red("You must specifiy a path to your Stylesheets.elm file. See the README for information on how to build a Stylesheets.elm file."));
+const cssSourceDir = path.join(process.cwd(), "css");
+const sourcePath = path.join(cssSourceDir, "src");
+
+if (!fs.existsSync(path.join(sourcePath, "Stylesheets.elm"))) {
+  console.log(chalk.red("You must create a css/src/Stylesheets.elm file. See the README for information on how to build a Stylesheets.elm file."));
   program.outputHelp();
   process.exit(1);
 }
@@ -34,7 +34,7 @@ const bar = _.repeat("-", headline.length);
 
 console.log("\n" + headline + "\n" + bar + "\n");
 
-elmCss(process.cwd(), sourcePath, program.output, program.pathToMake)
+elmCss(process.cwd(), program.output, program.pathToMake)
   .then(function(results) {
     console.log(chalk.green("Success! I created these css files:"));
     results.forEach(function(result) {

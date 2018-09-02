@@ -1,4 +1,4 @@
-module HomepageView exposing (..)
+module HomepageView exposing (class, classList, id, main, navElems)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)

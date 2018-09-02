@@ -1,9 +1,9 @@
 # This is a Fork
-This is a fork of [elm-css](https://github.com/rtfeldman/elm-css). Elm-css is
+This is a fork of [css-in-elm](https://github.com/rtfeldman/css-in-elm). Elm-css is
 abandoning support for generating CSS files and moving to locally scoped CSS
 rules. The original author believes the new locally scoped design is the One
 True Way and will be devoting his energy to the new design. This fork is ensure
-that the 11.x branch (the last version before the design change) of elm-css
+that the 11.x branch (the last version before the design change) of css-in-elm
 will be ported to future versions of Elm. This fork is commited to maintaining
 the old stylesheet generating design forward into future versions of Elm.
 
@@ -15,7 +15,7 @@ Sass, Less, or other css preprocessors, then this is the project for you.
 
 [![Logo](./assets/logo.png)](http://package.elm-lang.org/packages/ThinkAlexandria/css-in-elm/latest)
 
-# css-in-elm [![Version](https://img.shields.io/npm/v/elm-css.svg)](https://www.npmjs.com/package/elm-css) [![Travis build Status](https://travis-ci.org/ThinkAlexandria/css-in-elm.svg?branch=master)](http://travis-ci.org/ThinkAlexandria/css-in-elm) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/0j7x0mpggmtu6mms/branch/master?svg=true)](https://ci.appveyor.com/project/ThinkAlexandria/css-in-elm/branch/master)
+# css-in-elm [![Version](https://img.shields.io/npm/v/css-in-elm.svg)](https://www.npmjs.com/package/css-in-elm) [![Travis build Status](https://travis-ci.org/ThinkAlexandria/css-in-elm.svg?branch=master)](http://travis-ci.org/ThinkAlexandria/css-in-elm) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/0j7x0mpggmtu6mms/branch/master?svg=true)](https://ci.appveyor.com/project/ThinkAlexandria/css-in-elm/branch/master)
 
 `css-in-elm` lets you define CSS in Elm.
 
@@ -105,38 +105,37 @@ This approach is the simplest way to get started with `css-in-elm`. One advantag
 
 You can also use `css-in-elm` as a CSS preprocessor which generates separate .css files.
 
-To do this, you will need to install both the node module and the Elm library:
+To do this, you will need to create a special directory at the top level of
+your process to contain an elm application used only to generated CSS files.
 
-    npm install -g elm-css
+    mkdir css
+    cd css/
+    elm init
+
+Then you will need to install both the node module and the Elm library:
+
+    npm install -g css-in-elm
     elm package install ThinkAlexandria/css-in-elm
 
-Then you'll need a special module with a port for `elm-css` to access:
+Finally you'll need a special file with a port for `css-in-elm` to access inside the `css/src` directory:
 
 ```elm
-port module Stylesheets exposing (..)
+module Stylesheets exposing (..)
 
-import Css.File exposing (CssFileStructure, CssCompilerProgram)
 import MyCss
+import HomepageCss
 
-
-port files : CssFileStructure -> Cmd msg
-
-
-fileStructure : CssFileStructure
 fileStructure =
-    Css.File.toFileStructure
-        [ ( "index.css", Css.File.compile [ MyCss.css ] ) ]
+        [ ( "index.css", [ MyCss.css ] )
+        , ( "homepage.css", [ Homepage.css, MyCss.css ] )
+        ]
 
-
-main : CssCompilerProgram
-main =
-    Css.File.compiler files fileStructure
 ```
 
-Run `elm-css` on the file containing this `Stylesheets` module.
+Run `css-in-elm` from the root of your project (containing the css directory).
 Then include that css file in your web page.
 
-The above `elm-css` stylesheet compiles to the following .css file:
+The above `css-in-elm` stylesheet compiles to the following .css file:
 
 ```css
 body {
@@ -168,10 +167,10 @@ body {
 Try it out! (make sure you already have [elm](http://elm-lang.org) installed, e.g. with `npm install -g elm`)
 
 ```
-$ npm install -g elm-css
+$ npm install -g css-in-elm
 $ git clone https://github.com/ThinkAlexandria/css-in-elm.git
 $ cd css-in-elm/examples
-$ elm-css src/Stylesheets.elm
+$ css-in-elm
 $ less homepage.css
 ```
 
@@ -215,4 +214,4 @@ Now `zIndex 9999` is available to use inside our `Stylesheet`.
 
 ## Related Projects
 
-* [Elm CSS Normalize](https://github.com/scottcorgan/elm-css-normalize)
+* [Elm CSS Normalize](https://github.com/scottcorgan/css-in-elm-normalize)

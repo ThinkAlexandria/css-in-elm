@@ -5,9 +5,11 @@ import Css.Elements exposing (..)
 import Css.Namespace exposing (namespace)
 import SharedStyles exposing (..)
 
+class = Debug.toString >> Css.class
+id = Debug.toString >> Css.id
 
 css =
-    (stylesheet << namespace homepageNamespace.name)
+    (stylesheet << namespace "homepage")
         [ header
             [ backgroundColor (rgb 90 90 90)
             , boxSizing borderBox

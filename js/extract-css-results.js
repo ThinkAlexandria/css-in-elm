@@ -22,12 +22,10 @@ module.exports = function extractCssResults(dest) {
       over the nested objects to reach the targeted one,
       starting with the Elm object itself
       */
-    var stylesheetsModule = emitter.Elm.Stylesheets;
-    console.log("stylesheetsModule", stylesheetsModule);
+    var stylesheetsModule = emitter.Elm.Main;
     var worker = stylesheetsModule.init(null);
 
     worker.ports[stylesheetsPort].subscribe(function(stylesheets) {
-      console.log("stylesheets", stylesheets);
       var failures = stylesheets.filter(function(result) {
         return !result.success;
       });
