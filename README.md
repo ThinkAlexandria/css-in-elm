@@ -1,5 +1,5 @@
-# This is a Fork
-This is a fork of [css-in-elm](https://github.com/rtfeldman/css-in-elm). Elm-css is
+# Fork notice
+This is a fork of [elm-css](https://github.com/rtfeldman/elm-css). Elm-css is
 abandoning support for generating CSS files and moving to locally scoped CSS
 rules. The original author believes the new locally scoped design is the One
 True Way and will be devoting his energy to the new design. This fork is ensure
