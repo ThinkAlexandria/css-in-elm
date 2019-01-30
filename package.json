@@ -1,6 +1,6 @@
 {
   "name": "css-in-elm",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "Elm-based CSS Preprocessor",
   "main": "index.js",
   "bin": {
@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/ThinkAlexandria/css-in-elm#readme",
   "dependencies": {
-    "binstall": "1.2.0",
+    "binstall": "^1.2.1",
     "chalk": "2.1.0",
     "commander": "2.9.0",
     "cross-spawn": "5.1.0",
@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "chai": "3.5.0",
-    "mocha": "2.3.4"
+    "mocha": "^5.2.0"
   },
   "engineStrict": true,
   "engines": {

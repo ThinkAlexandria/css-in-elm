@@ -49,6 +49,11 @@ module.exports = function(
   var generatedElmStuff = path.join(generatedDir, "elm-stuff");
 
   mkdirp.sync(generatedDir);
+  // ensure the elm-stuff directory in the css/ folder exists so we can symlink
+  // it. If it does not exist `elm` has probably not downloaded the required
+  // packages yet and will do so automatically.
+  var cssSourceDirElmStuff = path.join(cssSourceDir, "elm-stuff");
+  mkdirp.sync(cssSourceDirElmStuff);
 
   if (!fs.existsSync(generatedElmStuff)) {
     fs.symlinkSync(
