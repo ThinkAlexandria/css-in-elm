@@ -18,7 +18,7 @@ function findExposedValues(
 ) {
   return new Promise(function(resolve, reject) {
     function finish() {
-      var process = spawn("elmi-to-json", [], {cwd: elmPackageJsonPath });
+      var process = spawn(path.join(__dirname, "..", "node_modules", ".bin", "elmi-to-json"), [], {cwd: elmPackageJsonPath});
       var jsonStr = "";
       var stderrStr = "";
 

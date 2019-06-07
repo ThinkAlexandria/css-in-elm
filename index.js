@@ -17,7 +17,7 @@ const _ = require("lodash"),
 
 const binaryExtension = process.platform === "win32" ? ".exe" : "";
 const readElmiPath =
-  path.join(__dirname, "bin", "elmi-to-json") + binaryExtension;
+  path.join(__dirname, "node_modules", ".bin", "elmi-to-json") + binaryExtension;
 const jsEmitterFilename = "emitter.js";
 
 module.exports = function(
