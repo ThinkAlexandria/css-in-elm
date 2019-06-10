@@ -17,6 +17,22 @@ Sass, Less, or other css preprocessors, then this is the project for you.
 
 # css-in-elm [![Version](https://img.shields.io/npm/v/css-in-elm.svg)](https://www.npmjs.com/package/css-in-elm) [![Travis build Status](https://travis-ci.org/ThinkAlexandria/css-in-elm.svg?branch=master)](http://travis-ci.org/ThinkAlexandria/css-in-elm) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/0j7x0mpggmtu6mms/branch/master?svg=true)](https://ci.appveyor.com/project/ThinkAlexandria/css-in-elm/branch/master)
 
+# Quick Start
+Try it out! (make sure you already have [elm](http://elm-lang.org) and elmi-to-json installed, e.g. with `npm install -g elm elmi-to-json`)
+
+```
+$ npm install -g css-in-elm
+$ git clone https://github.com/ThinkAlexandria/css-in-elm.git
+$ cd css-in-elm/examples
+$ css-in-elm
+$ less homepage.css
+```
+
+A gentle introduction to some of the features of `css-in-elm` is also available in
+[the tutorial](Tutorial.md).
+
+# About
+
 `css-in-elm` lets you define CSS in Elm.
 
 Here's an example of how to define some `css-in-elm` styles:
@@ -163,19 +179,6 @@ body {
     color: #ccffaa;
 }
 ```
-
-Try it out! (make sure you already have [elm](http://elm-lang.org) installed, e.g. with `npm install -g elm`)
-
-```
-$ npm install -g css-in-elm
-$ git clone https://github.com/ThinkAlexandria/css-in-elm.git
-$ cd css-in-elm/examples
-$ css-in-elm
-$ less homepage.css
-```
-
-A gentle introduction to some of the features of `css-in-elm` is also available in
-[the tutorial](Tutorial.md).
 
 ### Examples
 

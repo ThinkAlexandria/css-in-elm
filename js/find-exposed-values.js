@@ -3,14 +3,13 @@
 const _ = require("lodash"),
   path = require("path"),
   firstline = require("firstline"),
-  installReadElmi = require("../installer"),
   finder = require("./read-exposed.js"),
   fs = require("fs-extra"),
   spawn = require("cross-spawn");
+  chalk = require("chalk");
 
 function findExposedValues(
   types /*: Array<string>*/,
-  readElmiPath /*: string*/,
   elmPackageJsonPath /*: string*/,
   elmFilePaths /*: Array<string>*/,
   sourceDirs /*: Array<string>*/,
@@ -28,6 +27,16 @@ function findExposedValues(
 
       process.stderr.on("data", function(data) {
         stderrStr += data;
+      });
+
+      process.on("error", function(error) {
+        if (error.code === "ENOENT") {
+            // TODO figure out if there is differnt PATH for available binaries for windows.
+            // if (process.platform === "win32") { }
+            reject(chalk.red("`elmi-to-json` must be available on your PATH. You can install it with `npm install -g elmi-to-json`."))
+        } else {
+            console.log(error);
+        }
       });
 
       process.on("close", function(code) {
@@ -80,17 +89,6 @@ function findExposedValues(
       });
     }
     return finish();
-
-    if (fs.existsSync(readElmiPath)) {
-      // elmi-to-json was already downloaded successfully. We're good!
-      return finish();
-    } else {
-      // it wasn't downloaded, possibly because we were installed with
-      // --ignore-scripts - so download it!
-      return installReadElmi(verbose)
-        .then(finish)
-        .catch(reject);
-    }
   });
 }
 

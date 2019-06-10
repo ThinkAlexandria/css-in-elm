@@ -15,10 +15,8 @@ const _ = require("lodash"),
   extractCssResults = require("./js/extract-css-results.js"),
   hackMain = require("./js/hack-main.js");
 
-const binaryExtension = process.platform === "win32" ? ".exe" : "";
-const readElmiPath =
-  path.join(__dirname, "bin", "elmi-to-json") + binaryExtension;
 const jsEmitterFilename = "emitter.js";
+
 
 module.exports = function(
   projectDir /*: string*/,
@@ -90,7 +88,6 @@ module.exports = function(
     // anyway
     return findExposedValues(
       ["Css.File.UniqueClass", "Css.Snippet"],
-      readElmiPath,
       generatedDir,
       elmFilePaths,
       [cssSourceDir],

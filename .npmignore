@@ -30,4 +30,16 @@ tmp
 
 # Specific to .npmignore
 .travis.yml
+appveyor.yml
 README.md
+elm.json
+old.elm.json
+assets/
+examples/
+readme-example/
+Tutorial.md
+
+
+# elm files
+tests/
+src/
