@@ -21,7 +21,7 @@ const jsEmitterFilename = "emitter.js";
 module.exports = function(
   projectDir /*: string*/,
   outputDir /*: string */,
-  pathToMake /*: ?string */
+  pathToElm /*: ?string */
 ) {
   const cssSourceDir = path.join(projectDir, "css");
   const cssElmPackageJson = path.join(cssSourceDir, "elm.json");
@@ -76,7 +76,7 @@ module.exports = function(
   return Promise.all([
     writeGeneratedElmPackage(generatedDir, generatedSrc, cssSourceDir),
     makeGeneratedSrcDir,
-    compileAll(pathToMake, cssSourceDir, elmFilePaths)
+    compileAll(pathToElm, cssSourceDir, elmFilePaths)
   ]).then(function(promiseOutputs) {
     const repository /*: string */ = promiseOutputs[0];
 
@@ -107,7 +107,7 @@ module.exports = function(
           repository,
           path.join(generatedDir, jsEmitterFilename),
           generatedDir,
-          pathToMake
+          pathToElm
         ).then(writeResults(outputDir));
       });
     });
@@ -119,13 +119,13 @@ function emit(
   repository /*: string */,
   dest /*: string */,
   cwd /*: string */,
-  pathToMake /*: ?string */
+  pathToElm /*: ?string */
 ) {
   // Compile the js file.
   return compileEmitter(src, {
     output: dest,
     cwd: cwd,
-    pathToMake: pathToMake
+    pathToElm: pathToElm
   })
     //.then(function() {
     //  return hackMain(repository, dest);
