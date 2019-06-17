@@ -17,7 +17,7 @@ program
     "(optional) directory in which to write CSS files. Defaults to build/",
     path.join(process.cwd(), "build")
   )
-  .option("-m, --pathToMake [pathToMake]", "(optional) path to elm-make")
+  .option("-m, --pathToElm [pathToElm]", "(optional) path to elm")
   .parse(process.argv);
 
 const cssSourceDir = path.join(process.cwd(), "css");
@@ -34,7 +34,7 @@ const bar = _.repeat("-", headline.length);
 
 console.log("\n" + headline + "\n" + bar + "\n");
 
-elmCss(process.cwd(), program.output, program.pathToMake)
+elmCss(process.cwd(), program.output, program.pathToElm)
   .then(function(results) {
     console.log(chalk.green("Success! I created these css files:"));
     results.forEach(function(result) {

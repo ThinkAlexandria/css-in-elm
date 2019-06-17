@@ -11,7 +11,7 @@ const compile = require("node-elm-compiler").compile,
 // This compiles all the tests so that we generate *.elmi files for them,
 // which we can then read to determine which tests need to be run.
 module.exports = function compileAll(
-  pathToMake /*: ?string */,
+  pathToElm /*: ?string */,
   cwd /*: string */,
   testFilePaths /*: Array<string> */
 ) {
@@ -20,7 +20,7 @@ module.exports = function compileAll(
       output: "/dev/null",
       verbose: false,
       cwd: cwd,
-      pathToMake: pathToMake,
+      pathToElm: pathToElm,
       processOpts: { stdio: ["ignore", "ignore", "inherit"] }
     });
 
