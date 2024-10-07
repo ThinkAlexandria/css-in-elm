@@ -6,7 +6,7 @@ const _ = require("lodash"),
   finder = require("./read-exposed.js"),
   fs = require("fs-extra"),
   spawn = require("cross-spawn");
-  chalk = require("chalk");
+chalk = require("chalk");
 
 function findExposedValues(
   types /*: Array<string>*/,
@@ -15,34 +15,40 @@ function findExposedValues(
   sourceDirs /*: Array<string>*/,
   verbose /*: boolean*/
 ) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     function finish() {
-      var process = spawn("elmi-to-json", [], {cwd: elmPackageJsonPath });
+      var process = spawn("elmi-to-json", [], { cwd: elmPackageJsonPath });
       var jsonStr = "";
       var stderrStr = "";
 
-      process.stdout.on("data", function(data) {
+      process.stdout.on("data", function (data) {
         jsonStr += data;
       });
 
-      process.stderr.on("data", function(data) {
+      process.stderr.on("data", function (data) {
         stderrStr += data;
       });
 
-      process.on("error", function(error) {
+      process.on("error", function (error) {
         if (error.code === "ENOENT") {
-            // TODO figure out if there is differnt PATH for available binaries for windows.
-            // if (process.platform === "win32") { }
-            reject(chalk.red("`elmi-to-json` must be available on your PATH. You can install it with `npm install -g elmi-to-json`."))
+          // TODO figure out if there is differnt PATH for available binaries for windows.
+          // if (process.platform === "win32") { }
+          reject(
+            chalk.red(
+              "`elmi-to-json` must be available on your PATH. You can install it with `npm install -g elmi-to-json`."
+            )
+          );
         } else {
-            console.log(error);
+          console.log("Error when running `elmi-to-json`:");
+          console.log(error);
         }
       });
 
-      process.on("close", function(code) {
+      process.on("close", function (code) {
         if (stderrStr !== "") {
-          reject(stderrStr);
-        } else if (code !== 0) {
+          console.error(stderrStr);
+        }
+        if (code !== 0) {
           reject("Finding test interfaces failed, exiting with code " + code);
         }
 
@@ -54,8 +60,8 @@ function findExposedValues(
           reject("Received invalid JSON from test interface search: " + err);
         }
 
-        var filteredModules = _.flatMap(modules, function(mod) {
-          var eligible = _.flatMap(mod.types, function(typ) {
+        var filteredModules = _.flatMap(modules, function (mod) {
+          var eligible = _.flatMap(mod.types, function (typ) {
             if (types.indexOf(typ.signature) === -1) {
               return [];
             } else {
@@ -72,7 +78,7 @@ function findExposedValues(
         });
 
         return verifyModules(elmFilePaths)
-          .then(function() {
+          .then(function () {
             return Promise.all(
               _.map(
                 _.flatMap(
@@ -111,14 +117,14 @@ function toPathsAndModules(
   elmFilePaths /*:Array<string>*/,
   sourceDirs /*:Array<string>*/
 ) {
-  var paths = elmFilePaths.map(function(filePath) {
+  var paths = elmFilePaths.map(function (filePath) {
     return { filePath: filePath, module: moduleFromFilePath(filePath) };
   });
 
   // Each module must correspond to a file path, by way of a source directory.
   // This filters out stale modules left over from previous builds, for example
   // what happened in https://github.com/rtfeldman/node-test-runner/issues/122
-  return function(testModule) {
+  return function (testModule) {
     var moduleAsFilename = testModule.name.replace(/[\.]/g, path.sep) + ".elm";
 
     // for early return purposes, use old-school `for` loops
@@ -139,8 +145,8 @@ function toPathsAndModules(
             {
               name: testModule.name,
               values: testModule.values,
-              path: currentPath.filePath
-            }
+              path: currentPath.filePath,
+            },
           ];
         }
       }
@@ -154,8 +160,8 @@ function toPathsAndModules(
 // elm-make won't get a chance to detect this; they'll be filtered out first.
 function verifyModules(filePaths) {
   return Promise.all(
-    _.map(filePaths, function(filePath) {
-      return firstline(filePath).then(function(line) {
+    _.map(filePaths, function (filePath) {
+      return firstline(filePath).then(function (line) {
         var matches = line.match(/^(?:(?:port|effect)\s+)?module\s+(\S+)\s*/);
 
         if (matches) {
@@ -165,7 +171,7 @@ function verifyModules(filePaths) {
 
           // A module path matches if it lines up completely with a known one.
           if (
-            !testModulePaths.every(function(testModulePath, index) {
+            !testModulePaths.every(function (testModulePath, index) {
               return testModulePath === modulePath[index];
             })
           ) {
@@ -188,22 +194,23 @@ function verifyModules(filePaths) {
 }
 
 function filterExposing(pathAndModule) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     return finder
       .readExposing(pathAndModule.path)
-      .then(function(exposedValues) {
+      .then(function (exposedValues) {
         const values = pathAndModule.values;
         const newValues =
           exposedValues.length === 1 && exposedValues[0] === ".."
             ? // null exposedValues means "the module was exposing (..), so keep everything"
               values
             : // Only keep the values that were exposed.
-              _.intersectionWith(values, exposedValues, function(
-                value,
-                exposedName
-              ) {
-                return exposedName === value.name;
-              });
+              _.intersectionWith(
+                values,
+                exposedValues,
+                function (value, exposedName) {
+                  return exposedName === value.name;
+                }
+              );
 
         if (newValues.length < pathAndModule.values.length) {
           // TODO make this more generic
@@ -212,7 +219,7 @@ function filterExposing(pathAndModule) {
               pathAndModule.name +
               "` is a module with top-level Test values which it does not expose:\n\n" +
               _.difference(pathAndModule.values, newValues)
-                .map(function(test) {
+                .map(function (test) {
                   return test + " : Test";
                 })
                 .join("\n") +
@@ -227,5 +234,5 @@ function filterExposing(pathAndModule) {
 }
 
 module.exports = {
-  findExposedValues: findExposedValues
+  findExposedValues: findExposedValues,
 };

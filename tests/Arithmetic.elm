@@ -46,12 +46,12 @@ all =
         , describe "divideLengths"
             [ fuzzArithmetic3 "it divides" <|
                 \first second third ->
-                    if second == 0 || (first / second) == 0 then
+                    if second == 0 || (first / second) == 0 || third == 0 then
                         -- Skip tests of division by zero.
                         Expect.pass
 
                     else
-                        (subtractLengths (subtractLengths (em first) (em second)) (em third))
+                        (divideLengths (divideLengths (em first) (em second)) (em third))
                             |> Expect.equal (em ((first / second) / third))
             ]
         ]

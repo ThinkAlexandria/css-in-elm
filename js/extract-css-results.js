@@ -2,7 +2,7 @@
 // because flow will complain about our use of dynamic require().
 const stylesheetsPort = "files";
 
-module.exports = function extractCssResults(dest) {
+module.exports = function extractCssResults(dest /*: string*/) {
   return new Promise(function(resolve, reject) {
     var emitter = require(dest);
 

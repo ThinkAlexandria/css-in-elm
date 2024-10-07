@@ -3,7 +3,7 @@ module Compile exposing (colorWarnings, compileTest, dreamwriter, getRgbWarnings
 import CompileFixtures
 import Css exposing (..)
 import Expect
-import Fuzz exposing (Fuzzer, tuple3)
+import Fuzz exposing (Fuzzer, triple)
 import Test exposing (..)
 import TestUtil exposing (..)
 
@@ -24,16 +24,16 @@ colorWarnings : Test
 colorWarnings =
     describe "color warnings"
         [ describe "rgb"
-            [ fuzz (tuple3 ( validRgbValue, validRgbValue, validRgbValue ))
+            [ fuzz (triple validRgbValue validRgbValue validRgbValue )
                 "does not warn when everything is valid"
                 (getRgbWarnings >> Expect.equal 0)
-            , fuzz (tuple3 ( invalidRgbValue, validRgbValue, validRgbValue ))
+            , fuzz (triple invalidRgbValue validRgbValue validRgbValue )
                 "warns for invalid r values"
                 (getRgbWarnings >> Expect.equal 1)
-            , fuzz (tuple3 ( validRgbValue, invalidRgbValue, validRgbValue ))
+            , fuzz (triple validRgbValue invalidRgbValue validRgbValue )
                 "warns for invalid g values"
                 (getRgbWarnings >> Expect.equal 1)
-            , fuzz (tuple3 ( validRgbValue, validRgbValue, invalidRgbValue ))
+            , fuzz (triple validRgbValue validRgbValue invalidRgbValue )
                 "warns for invalid b values"
                 (getRgbWarnings >> Expect.equal 1)
             ]

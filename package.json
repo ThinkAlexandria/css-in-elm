@@ -1,6 +1,6 @@
 {
   "name": "css-in-elm",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "Elm-based CSS Preprocessor",
   "main": "index.js",
   "bin": {
@@ -36,9 +36,9 @@
     "firstline": "1.2.1",
     "fs-extra": "4.0.1",
     "glob": "7.1.2",
-    "lodash": "4.17.11",
-    "mkdirp": "0.5.1",
-    "node-elm-compiler": "^5.0.3",
+    "lodash": "^4.17.15",
+    "mkdirp": "^3.0.1",
+    "node-elm-compiler": "^5.0.4",
     "tmp": "0.0.28"
   },
   "devDependencies": {

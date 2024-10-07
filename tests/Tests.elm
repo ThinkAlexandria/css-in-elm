@@ -576,7 +576,8 @@ expectInvalidStylesheet stylesheet =
     stylesheet
         |> prettyPrint
         |> String.contains "Invalid Stylesheet"
-        |> Expect.true "Stylesheet was valid, but should have been invalid."
+        |> Expect.equal True
+        |> Expect.onFail "Stylesheet was valid, but should have been invalid."
 
 
 pseudoElements : Test

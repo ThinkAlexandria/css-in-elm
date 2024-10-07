@@ -15,16 +15,16 @@ module.exports = function compileAll(
   cwd /*: string */,
   testFilePaths /*: Array<string> */
 ) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     var compileProcess = compile(testFilePaths, {
       output: "/dev/null",
       verbose: false,
       cwd: cwd,
-      pathToMake: pathToMake,
-      processOpts: { stdio: ["ignore", "ignore", "inherit"] }
+      pathToElm: pathToMake,
+      processOpts: { stdio: ["ignore", "ignore", "inherit"] },
     });
 
-    compileProcess.on("close", function(exitCode) {
+    compileProcess.on("close", function (exitCode) {
       if (exitCode !== 0) {
         reject(
           "Compilation failed while attempting to build " +
